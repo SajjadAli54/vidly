@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
-import Like from "./common/like";
+import { paginate } from "../utils/paginate";
 import Pagination from "./common/pagination";
+import Table from "./table";
 
 class Movies extends Component {
   state = {
@@ -46,50 +47,20 @@ class Movies extends Component {
 
   render() {
     const { length: count } = this.state.movies;
-    const { pageSize, currentPage } = this.state;
+    const { pageSize, currentPage, movies } = this.state;
 
     if (!count) return "There are no movies in the database";
+
+    const paginated = paginate(movies, currentPage, pageSize);
 
     return (
       <React.Fragment>
         <h1>Showing {count} movies in the database</h1>
-        <table className="table table-hover table-responsive">
-          <thead>
-            <tr>
-              <th scope="col">Title</th>
-              <th scope="col">Genre</th>
-              <th scope="col">Stock</th>
-              <th scope="col">Rate</th>
-              <th scope="col"></th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.movies.map((movie) => (
-              <tr key={movie._id}>
-                <td>{movie.title}</td>
-                <td>{movie.genre.name}</td>
-                <td>{movie.numberInStock}</td>
-                <td>{movie.dailyRentalRate}</td>
-                <td>
-                  <Like
-                    liked={movie.liked}
-                    onClick={() => this.handleLike(movie)}
-                  />
-                </td>
-                <td>
-                  <button
-                    id={movie._id}
-                    className="btn btn-danger btn-sm"
-                    onClick={this.handleDelete}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <Table
+          movies={paginated}
+          onDelete={this.handleDelete}
+          onLike={this.handleLike}
+        />
         <Pagination
           itemsCount={count}
           pageSize={pageSize}
