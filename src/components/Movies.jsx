@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
+import { filterMovies } from "../utils/filter";
 import { paginate } from "../utils/paginate";
 import Pagination from "./common/pagination";
+import ListGroup from "./listgroup";
 import Table from "./table";
 
 class Movies extends Component {
@@ -9,6 +11,7 @@ class Movies extends Component {
     movies: [],
     pageSize: 4,
     currentPage: 1,
+    selectedGenre: "All",
   };
 
   componentDidMount() {
@@ -45,29 +48,44 @@ class Movies extends Component {
     });
   };
 
+  handleFilter = (genre) => {
+    this.setState({
+      selectedGenre: genre,
+    });
+  };
+
   render() {
-    const { length: count } = this.state.movies;
-    const { pageSize, currentPage, movies } = this.state;
+    const {
+      pageSize,
+      currentPage,
+      selectedGenre,
+      movies: allMovies,
+    } = this.state;
 
-    if (!count) return "There are no movies in the database";
+    if (!this.state.movies.length) return "There are no movies in the database";
 
-    const paginated = paginate(movies, currentPage, pageSize);
+    let movies = filterMovies(allMovies, selectedGenre);
+    const count = movies.length;
+    movies = paginate(movies, currentPage, pageSize);
 
     return (
-      <React.Fragment>
-        <h1>Showing {count} movies in the database</h1>
-        <Table
-          movies={paginated}
-          onDelete={this.handleDelete}
-          onLike={this.handleLike}
-        />
-        <Pagination
-          itemsCount={count}
-          pageSize={pageSize}
-          currentPage={currentPage}
-          onPageChange={this.handlePageChange}
-        />
-      </React.Fragment>
+      <div>
+        <ListGroup selectedGenre={selectedGenre} onFilter={this.handleFilter} />
+        <div>
+          <h1>Showing {count} movies in the database</h1>
+          <Table
+            movies={movies}
+            onDelete={this.handleDelete}
+            onLike={this.handleLike}
+          />
+          <Pagination
+            itemsCount={count}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={this.handlePageChange}
+          />
+        </div>
+      </div>
     );
   }
 }
