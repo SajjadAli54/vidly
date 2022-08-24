@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getMovies, deleteMovie } from "../services/fakeMovieService";
+import { getMovies } from "../services/fakeMovieService";
 
 class Movies extends Component {
   state = {
@@ -13,8 +13,9 @@ class Movies extends Component {
   }
 
   handleDelete = (event) => {
-    let id = event.target.id;
-    let movies = this.state.movies.filter((movie) => id !== movie._id);
+    let movies = this.state.movies.filter(
+      (movie) => event.target.id !== movie._id
+    );
 
     this.setState({
       movies,
@@ -22,7 +23,7 @@ class Movies extends Component {
   };
 
   render() {
-    let count = this.state.movies.length;
+    const { length: count } = this.state.movies;
 
     if (!count) return "There are no movies in the database";
 
