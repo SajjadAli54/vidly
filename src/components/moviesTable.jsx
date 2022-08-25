@@ -3,21 +3,21 @@ import Like from "./common/like";
 
 class MoviesTable extends Component {
   render() {
-    const { movies, onLike, onDelete, onSort } = this.props;
+    const { movies, onLike, onDelete } = this.props;
     return (
       <table className="table table-hover table-responsive">
         <thead>
           <tr>
-            <th onClick={() => onSort("title")} scope="col">
+            <th onClick={() => this.raiseSort("title")} scope="col">
               Title
             </th>
-            <th onClick={() => onSort("genre.name")} scope="col">
+            <th onClick={() => this.raiseSort("genre.name")} scope="col">
               Genre
             </th>
-            <th onClick={() => onSort("numberInStock")} scope="col">
+            <th onClick={() => this.raiseSort("numberInStock")} scope="col">
               Stock
             </th>
-            <th onClick={() => onSort("dailyRentalRate")} scope="col">
+            <th onClick={() => this.raiseSort("dailyRentalRate")} scope="col">
               Rate
             </th>
             <th scope="col"></th>
@@ -49,6 +49,18 @@ class MoviesTable extends Component {
       </table>
     );
   }
+
+  raiseSort = (column) => {
+    const sortColumn = { ...this.props.sortColumn };
+    if (sortColumn.column === column) {
+      sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
+    } else {
+      sortColumn.column = column;
+      sortColumn.order = "asc";
+    }
+
+    this.props.onSort(sortColumn);
+  };
 }
 
 export default MoviesTable;
