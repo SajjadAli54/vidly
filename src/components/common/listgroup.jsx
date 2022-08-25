@@ -2,7 +2,7 @@ import React from "react";
 import { getGenres } from "../../services/fakeGenreService";
 
 const ListGroup = (props) => {
-  const { items, textProperty, valueProperty, selectedGenre, onItemSelect } =
+  const { items, textProperty, valueProperty, selectedItem, onItemSelect } =
     props;
 
   return (
@@ -12,7 +12,7 @@ const ListGroup = (props) => {
           key={item[valueProperty]}
           onClick={() => onItemSelect(item[textProperty])}
           className={
-            item[textProperty] === selectedGenre
+            item[textProperty] === selectedItem
               ? "list-group-item active"
               : "list-group-item"
           }
