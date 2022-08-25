@@ -1,20 +1,23 @@
 import React from "react";
 import { getGenres } from "../../services/fakeGenreService";
 
-const ListGroup = ({ items, selectedGenre, onItemSelect }) => {
+const ListGroup = (props) => {
+  const { items, textProperty, valueProperty, selectedGenre, onItemSelect } =
+    props;
+
   return (
     <ul className="list-group inline-block">
-      {items.map((obj) => (
+      {items.map((item) => (
         <li
-          key={obj._id}
-          onClick={() => onItemSelect(obj.name)}
+          key={item[valueProperty]}
+          onClick={() => onItemSelect(item[textProperty])}
           className={
-            obj.name === selectedGenre
+            item[textProperty] === selectedGenre
               ? "list-group-item active"
               : "list-group-item"
           }
         >
-          {obj.name}
+          {item.name}
         </li>
       ))}
     </ul>
