@@ -4,8 +4,8 @@ import { getGenres } from "../services/fakeGenreService";
 import { getMovies } from "../services/fakeMovieService";
 import { paginate } from "../utils/paginate";
 import Pagination from "./common/pagination";
-import ListGroup from "./common/listgroup";
 import MoviesTable from "./moviesTable";
+import LeftSide from "./leftSide";
 
 class Movies extends Component {
   state = {
@@ -101,13 +101,12 @@ class Movies extends Component {
     const { totalCount, movies } = this.getPagesData();
     return (
       <div className="row">
-        <div className="col-3">
-          <ListGroup
-            items={genres}
-            selectedItem={selectedGenre}
-            onItemSelect={this.handleGenreSelect}
-          />
-        </div>
+        <LeftSide
+          classLabel={"col-3"}
+          items={genres}
+          selectedItem={selectedGenre}
+          onItemSelect={this.handleGenreSelect}
+        />
 
         <div className="col">
           <p>Showing {totalCount} movies in the database</p>
