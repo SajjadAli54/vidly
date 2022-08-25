@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { getGenres } from "../services/fakeGenreService";
 import { getMovies } from "../services/fakeMovieService";
 import { filterMovies } from "../utils/filter";
 import { paginate } from "../utils/paginate";
@@ -9,6 +10,7 @@ import Table from "./table";
 class Movies extends Component {
   state = {
     movies: [],
+    genres: [],
     pageSize: 4,
     currentPage: 1,
     selectedGenre: "All",
@@ -17,6 +19,7 @@ class Movies extends Component {
   componentDidMount() {
     this.setState({
       movies: getMovies(),
+      genres: getGenres(),
     });
   }
 
@@ -48,7 +51,7 @@ class Movies extends Component {
     });
   };
 
-  handleFilter = (genre) => {
+  handleGenreSelect = (genre) => {
     this.setState({
       selectedGenre: genre,
     });
@@ -60,6 +63,7 @@ class Movies extends Component {
       currentPage,
       selectedGenre,
       movies: allMovies,
+      genres,
     } = this.state;
 
     if (!this.state.movies.length) return "There are no movies in the database";
@@ -69,9 +73,16 @@ class Movies extends Component {
     movies = paginate(movies, currentPage, pageSize);
 
     return (
-      <div>
-        <ListGroup selectedGenre={selectedGenre} onFilter={this.handleFilter} />
-        <div>
+      <div className="row">
+        <div className="col-2">
+          <ListGroup
+            items={genres}
+            selectedGenre={selectedGenre}
+            onItemSelect={this.handleGenreSelect}
+          />
+        </div>
+
+        <div className="col">
           <h1>Showing {count} movies in the database</h1>
           <Table
             movies={movies}
