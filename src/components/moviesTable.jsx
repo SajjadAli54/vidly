@@ -1,7 +1,7 @@
 import React from "react";
 import Like from "./common/like";
 
-const Table = ({ movies, onLike, onDelete }) => {
+const MoviesTable = ({ movies, onLike, onDelete }) => {
   return (
     <table className="table table-hover table-responsive">
       <thead>
@@ -40,4 +40,4 @@ const Table = ({ movies, onLike, onDelete }) => {
   );
 };
 
-export default Table;
+export default MoviesTable;

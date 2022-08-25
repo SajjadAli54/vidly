@@ -4,7 +4,7 @@ import { getMovies } from "../services/fakeMovieService";
 import { paginate } from "../utils/paginate";
 import Pagination from "./common/pagination";
 import ListGroup from "./common/listgroup";
-import Table from "./table";
+import MoviesTable from "./moviesTable";
 
 class Movies extends Component {
   state = {
@@ -89,7 +89,7 @@ class Movies extends Component {
 
         <div className="col">
           <h1>Showing {count} movies in the database</h1>
-          <Table
+          <MoviesTable
             movies={movies}
             onDelete={this.handleDelete}
             onLike={this.handleLike}
