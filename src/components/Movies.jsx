@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { getGenres } from "../services/fakeGenreService";
 import { getMovies } from "../services/fakeMovieService";
-import { filterMovies } from "../utils/filter";
 import { paginate } from "../utils/paginate";
 import Pagination from "./common/pagination";
 import ListGroup from "./common/listgroup";
@@ -13,7 +12,7 @@ class Movies extends Component {
     genres: [],
     pageSize: 4,
     currentPage: 1,
-    selectedGenre: "All",
+    selectedGenre: false,
   };
 
   componentDidMount() {
@@ -68,10 +67,13 @@ class Movies extends Component {
 
     if (!this.state.movies.length) return "There are no movies in the database";
 
-    let movies = filterMovies(allMovies, selectedGenre);
-    const count = movies.length;
-    movies = paginate(movies, currentPage, pageSize);
+    const filtered = selectedGenre
+      ? allMovies.filter((m) => m.genre._id === selectedGenre._id)
+      : allMovies;
 
+    const movies = paginate(filtered, currentPage, pageSize);
+
+    const count = filtered.length;
     return (
       <div className="row">
         <div className="col-3">

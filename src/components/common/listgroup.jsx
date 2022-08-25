@@ -4,15 +4,14 @@ import { getGenres } from "../../services/fakeGenreService";
 const ListGroup = (props) => {
   const { items, textProperty, valueProperty, selectedItem, onItemSelect } =
     props;
-
   return (
     <ul className="list-group inline-block">
       {items.map((item) => (
         <li
           key={item[valueProperty]}
-          onClick={() => onItemSelect(item[textProperty])}
+          onClick={() => onItemSelect(item)}
           className={
-            item[textProperty] === selectedItem
+            item._id === selectedItem._id
               ? "list-group-item active"
               : "list-group-item"
           }
