@@ -4,7 +4,7 @@ import { getMovies } from "../services/fakeMovieService";
 import { filterMovies } from "../utils/filter";
 import { paginate } from "../utils/paginate";
 import Pagination from "./common/pagination";
-import ListGroup from "./listgroup";
+import ListGroup from "./common/listgroup";
 import Table from "./table";
 
 class Movies extends Component {

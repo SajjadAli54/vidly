@@ -1,5 +1,5 @@
 import React from "react";
-import { getGenres } from "../services/fakeGenreService";
+import { getGenres } from "../../services/fakeGenreService";
 
 const ListGroup = ({ items, selectedGenre, onItemSelect }) => {
   return (
