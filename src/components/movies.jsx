@@ -100,7 +100,7 @@ class Movies extends Component {
     const { totalCount, movies } = this.getPagesData();
     return (
       <div className="row">
-        <div className="col-3">
+        <div className="col">
           <ListGroup
             items={genres}
             selectedItem={selectedGenre}
@@ -108,7 +108,7 @@ class Movies extends Component {
           />
         </div>
 
-        <div className="col">
+        <div className="col-xxl-8 col-lg-9 col-md-10 col-12">
           <p>Showing {totalCount} movies in the database</p>
           <MoviesTable
             movies={movies}
